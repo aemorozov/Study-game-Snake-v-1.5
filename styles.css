@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   max-width: 400px;
@@ -24,24 +24,53 @@ body {
 }
 
 .square {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   background-color: #1d1d1d;
   margin: 2px;
   box-shadow: 0 0 2px #000;
 }
 
-.text {
+.game_over {
   display: none;
   width: 100%;
   font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; 
   color: #fffffffd;
 }
 
-.button {
+.startButton {
   display: inline-block;
+  color: #fffffffd;
+  text-decoration: none;
+  margin: 30px;
+}
+
+.button {
   display: none;
   color: #fffffffd;
   text-decoration: none;
-  margin: 50px;
+  margin: 30px;
+}
+
+.start_game {
+  display: block;
+  width: 100%;
+  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; 
+  color: #fffffffd;
+}
+
+.boardSize {
+  display: inline-block;
+  color: #fffffffd;
+  text-decoration: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.speed {
+  display: inline-block;
+  color: #fffffffd;
+  text-decoration: none;
+  padding-left: 15px;
+  padding-right: 15px;
 }
