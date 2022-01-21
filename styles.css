@@ -59,18 +59,10 @@ body {
   color: #fffffffd;
 }
 
-.boardSize {
+.level {
   display: inline-block;
   color: #fffffffd;
   text-decoration: none;
   padding-left: 10px;
   padding-right: 10px;
-}
-
-.speed {
-  display: inline-block;
-  color: #fffffffd;
-  text-decoration: none;
-  padding-left: 15px;
-  padding-right: 15px;
 }

@@ -1,6 +1,6 @@
 const startButton = document.querySelector('#startButton') // получаем кнопку start для использования при нажатии
-const boardSize = Array.prototype.slice.call(document.querySelectorAll('.boardSize'), 0) // создаём массив из вариантов размера поля
-const speedSelect = Array.prototype.slice.call(document.querySelectorAll('.speed'), 0) // создаём массив из вариантов скорости
+const level = Array.prototype.slice.call(document.querySelectorAll('.level'), 0) // создаём массив из вариантов размера поля
+const speedSelect = Array.prototype.slice.call(document.querySelectorAll('.level'), 0) // создаём массив из вариантов скорости
 const colors = ['#ADFF2F', '#20B2AA', '#FF69B4', '#FFFF00', '#FF0000'] // создаём массив цветов
 let lines = 0 // выбираем стороны квадрата 10, 15 или 20
 let board = document.querySelector('#board') // получаем поле "доска" из HTML
@@ -12,32 +12,24 @@ let e = 0 // переменная для конечного значения з�
 let speed = 0 // скорость в ms
 let k = 39 // переменная для предотвращения "обратного" движения
 let xmas = [0] // переменная для клонирования нашей змейки, нужна для функции столкновения змейки самой с собой
-let score = 0
-let scoreToWin = 0
-let event = null
+let score = 0 // очки
+let scoreToWin = 0 // очки для победы
+let event = null // для создания нашего поля
 
-boardSize.forEach(function(bS, x) { // сокращенный вариант выбора размера поля
-    bS.addEventListener('click', event => {
-            for (let i = 0, length = boardSize.length; i < length; i++) {
-                boardSize[i].style.color = '#fffffffd';
+level.forEach(function(lvl, x) { // сокращенный вариант выбора размера поля и скорости
+    lvl.addEventListener('click', event => {
+            for (let i = 0, length = level.length; i < length; i++) {
+                level[i].style.color = '#fffffffd';
               }
-            boardSize[x].style.color = '#56c5f8'
-            lines = parseInt(boardSize[x].getAttribute('id'))
+            level[x].style.color = '#56c5f8'
+            lines = parseInt(level[x].getAttribute('id')) // выбираем размер поля
+            speed = parseInt(speedSelect[x].getAttribute('speed')) // указываем скорость
+
     });
 }); 
 
-speedSelect.forEach(function(sS, x) { // сокращенный вариант выбора скорости
-    sS.addEventListener('click', event => {
-            for (let i = 0, length = speedSelect.length; i < length; i++) { 
-                speedSelect[i].style.color = '#fffffffd';
-              }
-            speedSelect[x].style.color = '#56c5f8'
-            speed = parseInt(speedSelect[x].getAttribute('id'))
-    });
-});
-
 startButton.addEventListener('click', event => { // кнопка старт
-    if (speed === 0 || lines === 0){
+    if (lines === 0){
     } else {
         document.getElementById('start_game').style.display = 'none'
         document.getElementById('startButton').style.display = 'none'
@@ -47,9 +39,7 @@ startButton.addEventListener('click', event => { // кнопка старт
 })
 
 function game(){
-
     let SQUARES_NUMBER = lines**2 // создаем максимальное значение квадратов
-
     if (SQUARES_NUMBER === 100) { // создаём таблицу квадратиков соответствующую размеру экрана и максимальному количеству квадратов
         board.style.maxWidth = '190px'
     } else if (SQUARES_NUMBER === 225) {
@@ -119,28 +109,25 @@ function game(){
         if (squares[i] === squares[GRN - 1] && (i + 1)/ lines != Math.floor((i + 1) / lines)){ // чтобы новый квадратик "прилипал спереди"
             snake.unshift(i + 1)
             i++
-            squares[i].style.backgroundColor = getRandomColor()
-            squares[e].style.backgroundColor = '#1d1d1d'
+            forIAndEQuares()
             createRandomSquare()
         }
         if ((i + 1)/ lines === Math.floor((i + 1) / lines)){ // создаём поведение на правой границе
             if (squares[(i - lines + 1)] === squares[GRN]) { // а тут совсем редкое поведение на правой границе, когда мы ловим цель на левой границе
                 snake.unshift(i) // добавляем в змейку новое значение
                 i = i - lines + 1 // что бы квадратик приклеился спереди нашей змейки
-                squares[i].style.backgroundColor = getRandomColor()
-                squares[e].style.backgroundColor = '#1d1d1d'
-                createRandomSquare()                      
+                let GRC = getRandomColor()
+                forIAndEQuares()
+                createRandomSquare()
             } else {
                 i = i - lines + 1
-                squares[e].style.backgroundColor = '#1d1d1d'
             }
         } else {        
             i = i + 1
         }
         snake.unshift(i) // добавляем в змейку новое значение
         snake.pop() // отбрасываем ненужное 
-        squares[i].style.backgroundColor = getRandomColor() // а новому i даём цвет
-        squares[e].style.backgroundColor = '#1d1d1d' // и гасим квадратик, который выпал из массива змейки
+        forIAndEQuares()
     }
 
     function plusOneSquareLeft(){ // реализуем движение влево, всё аналогично предыдущей функции движения вправо
@@ -150,16 +137,14 @@ function game(){
         if (squares[i] === squares[GRN + 1] && i / lines != Math.floor(i / lines)){
             snake.unshift(i - 1)
             i--
-            squares[i].style.backgroundColor = getRandomColor()
-            squares[e].style.backgroundColor = '#1d1d1d'
+            forIAndEQuares()
             createRandomSquare()
         }
         if (i / lines === Math.floor(i / lines)){
             if (squares[i + lines - 1] === squares[GRN]){
                 snake.unshift(i)
                 i = i + lines - 1
-                squares[i].style.backgroundColor = getRandomColor()
-                squares[e].style.backgroundColor = '#1d1d1d'
+                forIAndEQuares()
                 createRandomSquare()
             } else {
                 i = i + lines - 1
@@ -169,8 +154,7 @@ function game(){
         }
         snake.unshift(i) // добавляем в змейку новое значение
         snake.pop() // отбрасываем ненужное 
-        squares[i].style.backgroundColor = getRandomColor() // а новому i даём цвет
-        squares[e].style.backgroundColor = '#1d1d1d'
+        forIAndEQuares()
     }
 
     function plusOneSquareUp(){ // реализуем движение вверх
@@ -180,16 +164,14 @@ function game(){
         if (squares[i] === squares[GRN + lines] && squares[i] != squares[GRN - lines**2 + lines]){
             snake.unshift(i - lines)
             i = i - lines
-            squares[i].style.backgroundColor = getRandomColor()
-            squares[e].style.backgroundColor = '#1d1d1d'
+            forIAndEQuares()
             createRandomSquare()
         }
         if (i < lines){ 
             if (squares[i + lines**2 - lines] === squares[GRN]){
                 snake.unshift(i)
                 i = i + lines**2 - lines
-                squares[i].style.backgroundColor = getRandomColor()
-                squares[e].style.backgroundColor = '#1d1d1d'
+                forIAndEQuares()
                 createRandomSquare()
             } else {
                 i = i + lines**2 - lines
@@ -199,8 +181,7 @@ function game(){
         }
         snake.unshift(i)
         snake.pop()
-        squares[i].style.backgroundColor = getRandomColor()
-        squares[e].style.backgroundColor = '#1d1d1d'
+        forIAndEQuares()
     }
 
     function plusOneSquareDown(){ // реализуем движение вниз
@@ -210,16 +191,14 @@ function game(){
         if (squares[i] === squares[GRN - lines] && squares[i] != squares[GRN + lines**2 - lines]){
             snake.unshift(i + lines)
             i = i + lines
-            squares[i].style.backgroundColor = getRandomColor()
-            squares[e].style.backgroundColor = '#1d1d1d'
+            forIAndEQuares()
             createRandomSquare()
         }
         if (i >= lines**2 - lines){ 
             if (squares[i - lines**2 + lines] === squares[GRN]){
                 snake.unshift(i)
                 i = i - lines**2 + lines
-                squares[i].style.backgroundColor = getRandomColor()
-                squares[e].style.backgroundColor = '#1d1d1d'
+                forIAndEQuares()
                 createRandomSquare()
             } else {
                 i = i - lines**2 + lines
@@ -229,8 +208,15 @@ function game(){
         }
         snake.unshift(i)
         snake.pop()
-        squares[i].style.backgroundColor = getRandomColor()
+        forIAndEQuares()
+    }
+
+    function forIAndEQuares (){ // вынес в функцию повторяющийся код для окрашивания каждого будущего квадратика в змейке и закрашивания серым последнего
+        let GRC = getRandomColor()
+        squares[i].style.backgroundColor = GRC
+        squares[i].style.boxShadow = `0 0 2px ${GRC}, 0 0 10px ${GRC}`        
         squares[e].style.backgroundColor = '#1d1d1d'
+        squares[e].style.boxShadow = `0 0 2px #000`
     }
 
     function getRandomColor() { // реализуем рандомный цвет активного квадрата из массива цветов
@@ -239,8 +225,10 @@ function game(){
     }
 
     function createRandomSquare(){ // делаем один из квадратов массива доски цветным (цель для змейки)
-        squares[getRandomNumber(1, lines**2 - 1)].style.backgroundColor = getRandomColor()
-        
+        GRC = getRandomColor()
+        let GRN = getRandomNumber(1, lines**2 - 1)
+        squares[GRN].style.backgroundColor = GRC
+        squares[GRN].style.boxShadow = `0 0 2px ${GRC}, 0 0 10px ${GRC}`        
     }
 
     function getRandomNumber(min, max){ // эту функцию используем для выбора случайного квадрата под цель для змейки
