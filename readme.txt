@@ -1,33 +1,33 @@
-Моя первая игра, реализованая на JavaScript.
+<h1>My first game implemented in JavaScript.</h1>
 
 Snake_1.0
-- создана логика движения вправо, влево, вверх, вниз
-- создано управление с клавиатуры ПК
-- создана логика переходов на границах полей
-- создана логика рандомного появления мишени
-- создана логика ловли мишени
-- создан конечный экран со счётом очков и кнопкой новой игры
-- убран баг, когда рандомные квадраты появлялись в теле змейки
-- пофиксены баги переходов на границах поля
-- создана логика столкновения с хвостом
+- created the logic of movement to the right, left, up, down
+- created control from the PC keyboard
+- created the logic of transitions at the borders of the fields
+- created the logic of the random appearance of the target
+- created target catching logic
+- created end screen with score and new game button
+- removed a bug when random squares appeared in the body of a snake
+- fixed bugs of transitions at the field borders
+- tail collision logic created
 
 Snake_1.1
-- добавлена размерность поля (3 версии)
-- добавлен стартовый экран
-- добавлена возможность выбора размера поля
-- добавлена возможность выбора скорости
+- added field dimension (3 versions)
+- added start screen
+- added the ability to select the size of the field
+- added ability to select speed
 
 Snake_1.2
-- добавлена возможность управления с тачскрина
+- Added the ability to control from the touchscreen
 
 Snake_1.3
-- убран баг "столкновение с хвостом при быстром двойном изменении направления движения"
-- оптимизирован код выбора поля и скорости, код сжат на 40 строк
+- removed the bug "collision with the tail during a quick double change of direction"
+- optimized code for field selection and speed, code compressed into 40 lines
 
 Snake_1.4
-- добавил неоновое свечение
-- вывел повторяющийся код для окрашивания и гашения цвета змейки в отдельную функцию forIAndESquares
-- решил, что выбирать 2 условия перед игрой слишком скучно и ввёл выбор Сложности, которая меняет размер поля и скорость
+- added neon glow
+- brought the repeating code for coloring and blanking the color of the snake into a separate function forIAndESquares
+- decided that choosing 2 conditions before the game is too boring and introduced a choice of Difficulty, which changes the field size and speed
 
 Snake_1.5
-- Скорость змейки увеличивается на 2% на всех уровнях при каждом съеденом квадрате. Это можно отследить в консоли.
+- The speed of the snake is increased by 2% at all levels for each square eaten. This can be tracked in the console.
