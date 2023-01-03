@@ -1,4 +1,4 @@
-<h1>My first game implemented in JavaScript.</h1>
+# My first game implemented in JavaScript.
 
 Snake_1.0
 - created the logic of movement to the right, left, up, down
